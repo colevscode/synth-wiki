@@ -3,9 +3,10 @@ name: Build + Publish
 on:
   push:
     branches:
-      - main
-    tags:
-      - 'v*'
+      - synth-wiki
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
 
 env:
   BASE_DEV_VERSION: 2.5.0
@@ -61,15 +62,15 @@ jobs:
         file: dev/build/Dockerfile
         push: true
         tags: |
-          requarks/wiki:canary
-          requarks/wiki:canary-${{ env.REL_VERSION_STRICT }}
-          ghcr.io/requarks/wiki:canary
-          ghcr.io/requarks/wiki:canary-${{ env.REL_VERSION_STRICT }}
+          colevscode/synth-wiki:canary
+          colevscode/synth-wiki:canary-${{ env.REL_VERSION_STRICT }}
+          ghcr.io/colevscode/synth-wiki:canary
+          ghcr.io/colevscode/synth-wiki:canary-${{ env.REL_VERSION_STRICT }}
 
     - name: Extract compiled files
       run: |
         mkdir -p _dist
-        docker create --name wiki ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT
+        docker create --name wiki ghcr.io/colevscode/synth-wiki:canary-$REL_VERSION_STRICT
         docker cp wiki:/wiki _dist
         docker rm wiki
         rm _dist/wiki/config.yml
@@ -180,8 +181,8 @@ jobs:
         provenance: false
         push: true
         tags: |
-          requarks/wiki:canary-${{ matrix.docker }}-${{ env.REL_VERSION_STRICT }}
-          ghcr.io/requarks/wiki:canary-${{ matrix.docker }}-${{ env.REL_VERSION_STRICT }}
+          colevscode/synth-wiki:canary-${{ matrix.docker }}-${{ env.REL_VERSION_STRICT }}
+          ghcr.io/colevscode/synth-wiki:canary-${{ matrix.docker }}-${{ env.REL_VERSION_STRICT }}
 
   windows:
     name: Windows Build
@@ -257,13 +258,13 @@ jobs:
       run: |
         echo "Creating the manifests..."
 
-        docker manifest create requarks/wiki:beta-$REL_VERSION_STRICT requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT requarks/wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:beta-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create colevscode/synth-wiki:beta-$REL_VERSION_STRICT colevscode/synth-wiki:canary-$REL_VERSION_STRICT colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/colevscode/synth-wiki:beta-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
 
         echo "Pushing the manifests..."
 
-        docker manifest push -p requarks/wiki:beta-$REL_VERSION_STRICT
-        docker manifest push -p ghcr.io/requarks/wiki:beta-$REL_VERSION_STRICT
+        docker manifest push -p colevscode/synth-wiki:beta-$REL_VERSION_STRICT
+        docker manifest push -p ghcr.io/colevscode/synth-wiki:beta-$REL_VERSION_STRICT
 
   release:
     name: Publish Release Images
@@ -307,25 +308,25 @@ jobs:
         echo "Using major $MAJOR and minor $MINOR..."
         echo "Creating the manifests..."
 
-        docker manifest create requarks/wiki:$REL_VERSION_STRICT requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT requarks/wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create requarks/wiki:$MAJOR requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT requarks/wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create requarks/wiki:$MAJORMINOR requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT requarks/wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create requarks/wiki:latest requarks/wiki:canary-$REL_VERSION_STRICT requarks/wiki:canary-arm64-$REL_VERSION_STRICT requarks/wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:$MAJOR ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:$MAJORMINOR ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create ghcr.io/requarks/wiki:latest ghcr.io/requarks/wiki:canary-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/requarks/wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create colevscode/synth-wiki:$REL_VERSION_STRICT colevscode/synth-wiki:canary-$REL_VERSION_STRICT colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create colevscode/synth-wiki:$MAJOR colevscode/synth-wiki:canary-$REL_VERSION_STRICT colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create colevscode/synth-wiki:$MAJORMINOR colevscode/synth-wiki:canary-$REL_VERSION_STRICT colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create colevscode/synth-wiki:latest colevscode/synth-wiki:canary-$REL_VERSION_STRICT colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/colevscode/synth-wiki:$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/colevscode/synth-wiki:$MAJOR ghcr.io/colevscode/synth-wiki:canary-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/colevscode/synth-wiki:$MAJORMINOR ghcr.io/colevscode/synth-wiki:canary-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
+        docker manifest create ghcr.io/colevscode/synth-wiki:latest ghcr.io/colevscode/synth-wiki:canary-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
 
         echo "Pushing the manifests..."
 
-        docker manifest push -p requarks/wiki:$REL_VERSION_STRICT
-        docker manifest push -p requarks/wiki:$MAJOR
-        docker manifest push -p requarks/wiki:$MAJORMINOR
-        docker manifest push -p requarks/wiki:latest
-        docker manifest push -p ghcr.io/requarks/wiki:$REL_VERSION_STRICT
-        docker manifest push -p ghcr.io/requarks/wiki:$MAJOR
-        docker manifest push -p ghcr.io/requarks/wiki:$MAJORMINOR
-        docker manifest push -p ghcr.io/requarks/wiki:latest
+        docker manifest push -p colevscode/synth-wiki:$REL_VERSION_STRICT
+        docker manifest push -p colevscode/synth-wiki:$MAJOR
+        docker manifest push -p colevscode/synth-wiki:$MAJORMINOR
+        docker manifest push -p colevscode/synth-wiki:latest
+        docker manifest push -p ghcr.io/colevscode/synth-wiki:$REL_VERSION_STRICT
+        docker manifest push -p ghcr.io/colevscode/synth-wiki:$MAJOR
+        docker manifest push -p ghcr.io/colevscode/synth-wiki:$MAJORMINOR
+        docker manifest push -p ghcr.io/colevscode/synth-wiki:latest
 
     - name: Download Linux Build
       uses: actions/download-artifact@v4
@@ -378,13 +379,13 @@ jobs:
         disable_web_page_preview: true
         message: |
           Wiki.js *${{ github.ref_name }}* has been released!
-          See [release notes](https://github.com/requarks/wiki/releases) for details.
+          See [release notes](https://github.com/colevscode/synth-wiki/releases) for details.
 
     - name: Notify Discord Channel
       uses: sebastianpopp/discord-action@v2.0
       with:
         webhook: ${{ secrets.DISCORD_WEBHOOK }}
-        message: Wiki.js ${{ github.ref_name }} has been released! See https://github.com/requarks/wiki/releases for details.
+        message: Wiki.js ${{ github.ref_name }} has been released! See https://github.com/colevscode/synth-wiki/releases for details.
 
   # build-do-image:
   #   name: Build DigitalOcean Image
