@@ -62,8 +62,6 @@ jobs:
         file: dev/build/Dockerfile
         push: true
         tags: |
-          colevscode/synth-wiki:canary
-          colevscode/synth-wiki:canary-${{ env.REL_VERSION_STRICT }}
           ghcr.io/colevscode/synth-wiki:canary
           ghcr.io/colevscode/synth-wiki:canary-${{ env.REL_VERSION_STRICT }}
 
@@ -181,7 +179,6 @@ jobs:
         provenance: false
         push: true
         tags: |
-          colevscode/synth-wiki:canary-${{ matrix.docker }}-${{ env.REL_VERSION_STRICT }}
           ghcr.io/colevscode/synth-wiki:canary-${{ matrix.docker }}-${{ env.REL_VERSION_STRICT }}
 
   windows:
@@ -258,12 +255,10 @@ jobs:
       run: |
         echo "Creating the manifests..."
 
-        docker manifest create colevscode/synth-wiki:beta-$REL_VERSION_STRICT colevscode/synth-wiki:canary-$REL_VERSION_STRICT colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
         docker manifest create ghcr.io/colevscode/synth-wiki:beta-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
 
         echo "Pushing the manifests..."
 
-        docker manifest push -p colevscode/synth-wiki:beta-$REL_VERSION_STRICT
         docker manifest push -p ghcr.io/colevscode/synth-wiki:beta-$REL_VERSION_STRICT
 
   release:
@@ -308,10 +303,6 @@ jobs:
         echo "Using major $MAJOR and minor $MINOR..."
         echo "Creating the manifests..."
 
-        docker manifest create colevscode/synth-wiki:$REL_VERSION_STRICT colevscode/synth-wiki:canary-$REL_VERSION_STRICT colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create colevscode/synth-wiki:$MAJOR colevscode/synth-wiki:canary-$REL_VERSION_STRICT colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create colevscode/synth-wiki:$MAJORMINOR colevscode/synth-wiki:canary-$REL_VERSION_STRICT colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
-        docker manifest create colevscode/synth-wiki:latest colevscode/synth-wiki:canary-$REL_VERSION_STRICT colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
         docker manifest create ghcr.io/colevscode/synth-wiki:$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
         docker manifest create ghcr.io/colevscode/synth-wiki:$MAJOR ghcr.io/colevscode/synth-wiki:canary-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
         docker manifest create ghcr.io/colevscode/synth-wiki:$MAJORMINOR ghcr.io/colevscode/synth-wiki:canary-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-arm64-$REL_VERSION_STRICT ghcr.io/colevscode/synth-wiki:canary-armv7-$REL_VERSION_STRICT
@@ -319,10 +310,6 @@ jobs:
 
         echo "Pushing the manifests..."
 
-        docker manifest push -p colevscode/synth-wiki:$REL_VERSION_STRICT
-        docker manifest push -p colevscode/synth-wiki:$MAJOR
-        docker manifest push -p colevscode/synth-wiki:$MAJORMINOR
-        docker manifest push -p colevscode/synth-wiki:latest
         docker manifest push -p ghcr.io/colevscode/synth-wiki:$REL_VERSION_STRICT
         docker manifest push -p ghcr.io/colevscode/synth-wiki:$MAJOR
         docker manifest push -p ghcr.io/colevscode/synth-wiki:$MAJORMINOR
