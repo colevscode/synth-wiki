@@ -109,6 +109,7 @@ jobs:
       env:
         MATRIXENV: ${{ matrix.dbtype }}
         CYPRESS_KEY: ${{ secrets.CYPRESS_KEY }}
+        DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
       run: |
         chmod u+x dev/cypress/ci-setup.sh
         dev/cypress/ci-setup.sh
