@@ -1,5 +1,9 @@
 /* THEME SPECIFIC STYLES */
 
+:root {
+  color-scheme: dark;
+}
+
 .v-main .contents {
   color: mc('grey', '800');
   padding: .5rem 0 50px;
@@ -1169,6 +1173,7 @@
 .comments {
   &-container {
     border-radius: 7px;
+    margin-bottom: 20px;
   }
 
   &-header {

@@ -6,7 +6,9 @@
       template(v-else-if='company && company.length > 0 && contentLicense !== ``')
         span(v-if='contentLicense === `alr`') {{ $t('common:footer.copyright', { company: company, year: currentYear, interpolation: { escapeValue: false } }) }} |&nbsp;
         span(v-else) {{ $t('common:footer.license', { company: company, license: $t('common:license.' + contentLicense), interpolation: { escapeValue: false } }) }} |&nbsp;
-      span {{ $t('common:footer.poweredBy') }} #[a(href='https://wiki.js.org', ref='nofollow') Wiki.js]
+      template(v-if='!isPublished')
+        span.caption.red--text {{$t('common:page.unpublished')}}
+        status-indicator.ml-3(negative, pulse)
 </template>
 
 <script>
@@ -28,6 +30,10 @@ export default {
     darkColor: {
       type: String,
       default: 'grey darken-3'
+    },
+    isPublished: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
@@ -39,6 +45,7 @@ export default {
     company: get('site/company'),
     contentLicense: get('site/contentLicense'),
     footerOverride: get('site/footerOverride'),
+    isPublished: get('page/isPublished'),
     footerOverrideRender () {
       if (!this.footerOverride) { return '' }
       return md.renderInline(this.footerOverride)
