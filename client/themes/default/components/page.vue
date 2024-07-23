@@ -86,20 +86,20 @@
             v-if='tocPosition !== `off` && $vuetify.breakpoint.lgAndUp'
             :order-xs1='tocPosition !== `right`'
             :order-xs2='tocPosition === `right`'
-            lg3
+            lg2
             xl2
             )
             .page-toc-card(v-if='tocDecoded.length', :class='$vuetify.theme.dark ? `darken-3-d3` : ``')
               .overline.pa-5.pb-0(:class='$vuetify.theme.dark ? `blue--text text--lighten-2` : `primary--text`') {{$t('common:page.toc')}}
               v-list.pb-3(dense, nav)
                 template(v-for='(tocItem, tocIdx) in tocDecoded')
-                  v-list-item(@click='$vuetify.goTo(tocItem.anchor, scrollOpts)')
+                  v-list-item(@click='$vuetify.goTo(tocItem.anchor, scrollOpts)').nav-list-item
                     v-icon(color='grey', small) {{ $vuetify.rtl ? `mdi-chevron-left` : `mdi-chevron-right` }}
                     v-list-item-title.px-3 {{tocItem.title}}
                   //- v-divider(v-if='tocIdx < toc.length - 1 || tocItem.children.length')
                   template(v-for='tocSubItem in tocItem.children')
-                    v-list-item(@click='$vuetify.goTo(tocSubItem.anchor, scrollOpts)')
-                      v-icon.px-3(color='grey lighten-1', small) {{ $vuetify.rtl ? `mdi-chevron-left` : `mdi-chevron-right` }}
+                    v-list-item(@click='$vuetify.goTo(tocSubItem.anchor, scrollOpts)').ml-3.pl-3.nav-sublist-item
+                      //- v-icon.px-3(color='grey lighten-1', small) {{ $vuetify.rtl ? `mdi-chevron-left` : `mdi-chevron-right` }}
                       v-list-item-title.px-3.caption.grey--text(:class='$vuetify.theme.dark ? `text--lighten-1` : `text--darken-1`') {{tocSubItem.title}}
                     //- v-divider(inset, v-if='tocIdx < toc.length - 1')
             .page-col-footer
@@ -723,6 +723,31 @@ export default {
   .v-breadcrumbs__divider:nth-child(2) {
     padding: 0 6px 0 12px;
   }
+}
+
+.nav-list-item {
+  margin-top: 4px;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+}
+
+.nav-sublist-item {
+  border-left: 1px solid transparent;
+  // border-left: 1px solid #5555556a;
+  padding-bottom: 0 !important;
+  margin-bottom: 0 !important;
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+  min-height: 32px !important;
+}
+
+.nav-sublist-item::before {
+  border-top-left-radius: 0 !important;
+  border-bottom-left-radius: 0 !important;
+}
+
+.nav-sublist-item:hover {
+  border-left: 1px solid #64b5f6;
 }
 
 .page-col-sd {
