@@ -15,22 +15,11 @@
     position: absolute;
     top: 0;
     left: 0;
-    background-image: url('../static/svg/motif-blocks.svg');
+    background-image: url('../static/img/splash/synthbg-lowres.png');
     background-position: center center;
-    background-repeat: repeat;
-    background-size: 500px;
+    background-size: cover;
     z-index: 0;
     opacity: .75;
-    animation: onboardingBgReveal 50s linear infinite;
-
-    @include keyframes(onboardingBgReveal) {
-      0% {
-        background-position-y: 0;
-      }
-      100% {
-        background-position-y: -2000px;
-      }
-    }
   }
 
   &-content {
@@ -42,11 +31,11 @@
   }
 
   img {
-    width: 500px;
-    filter: grayscale(100%) brightness(160%);
+    width: 640px;
     margin-bottom: 3rem;
     z-index: 2;
     animation-duration: 3s;
+    box-shadow: 20px 2016px teal;
 
     @include until($tablet) {
       width: 300px;

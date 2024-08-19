@@ -4,7 +4,7 @@
       .login-sd
         .d-flex.mb-5
           .login-logo
-            v-avatar(tile, size='34')
+            v-avatar(tile, height='34', width='300')
               v-img(:src='logoUrl')
           .login-title
             .text-h6.grey--text.text--darken-4 {{ siteTitle }}
@@ -721,10 +721,11 @@ export default {
 
     &-logo {
       padding: 12px 0 0 12px;
-      width: 58px;
+      margin: 0 0 0 12px;
       height: 58px;
       background-color: #222;
-      margin-left: 12px;
+      width: 100%;
+      text-align: center;
       border-bottom-left-radius: 7px;
       border-bottom-right-radius: 7px;
     }
