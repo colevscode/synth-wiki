@@ -49,7 +49,7 @@
         v-row.page-header-section(no-gutters, align-content='center', style='height: 90px;')
           v-col.page-col-content.is-page-header(
             :offset-xl='tocPosition === `left` ? 2 : 0'
-            :offset-lg='tocPosition === `left` ? 3 : 0'
+            :offset-lg='tocPosition === `left` ? 2 : 0'
             :xl='tocPosition === `right` ? 10 : false'
             :lg='tocPosition === `right` ? 9 : false'
             style='margin-top: auto; margin-bottom: auto;'
@@ -218,8 +218,6 @@
                   //-   span {{$t('common:page.printFormat')}}
                   v-spacer
 
-  
-
           v-flex.page-col-content(
             xs12
             :lg9='tocPosition !== `off`'
@@ -334,7 +332,7 @@
                 span {{$t('common:comments.title')}}
               .comments-main
                 slot(name='comments')
-            nav-footer  
+            nav-footer
     notify
     search-results
     v-fab-transition
@@ -763,7 +761,7 @@ export default {
   margin-right: 12px;
   margin-top: -95px;
   margin-bottom: 0;
-  
+
   @at-root .theme--dark & {
     background-color: #1e1e1e;
     border-right: 1px solid hsla(0, 0%, 100%, 0.726);
@@ -787,7 +785,6 @@ export default {
   bottom: 0;
   // background-color: mc('grey', '900');
 }
-
 
 .page-header-section {
   position: relative;
